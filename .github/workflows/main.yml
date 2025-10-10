@@ -15,5 +15,4 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }} # Pass the issue ID
           body: |
-            Hello! This is an automated comment on issue #${{ github.event.issue.number }}.
-            Thanks for opening it!
+            ${{ github.event.issue }
