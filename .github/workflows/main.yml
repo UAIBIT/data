@@ -13,7 +13,7 @@ jobs:
       - name: Set dynamic variable
         run: echo '${{ github.event.issue.body }}' | sed "s/.*${Public}//") >> communityData.json
              cat communityData.json
-             echo 'DYNAMIC_VAR=$(  >> $GITHUB_ENV'
+             echo 'DYNAMIC_VAR=test'  >> $GITHUB_ENV
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         with:
