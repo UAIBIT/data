@@ -14,5 +14,4 @@ jobs:
         uses: peter-evans/create-or-update-comment@v5
         with:
           issue-number: ${{ github.event.issue.number }} # Pass the issue ID
-          body: |
-            ${{ github.event.issue }
+          body: ${{ github.event.issue }}
