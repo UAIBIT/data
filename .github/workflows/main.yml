@@ -2,7 +2,7 @@ name: Add comment to issue
 
 on:
   issues:
-    types: [opened] # Trigger on issue opened events
+    types: [opened, edited] # Trigger on issue opened events
 
 jobs:
   add-issue-comment:
