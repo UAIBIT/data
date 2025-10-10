@@ -14,4 +14,4 @@ jobs:
         uses: peter-evans/create-or-update-comment@v5
         with:
           issue-number: ${{ github.event.issue.number }} # Pass the issue ID
-          body: echo "${${{ github.event.issue.body }}#*${Public}}"
+          body: echo "${${{ github.event.issue.body }}#*Public}"
