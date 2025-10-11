@@ -15,9 +15,10 @@ jobs:
       - name: mount data
         if: ${{ env.DATA_SIZE > 0 }}
         run: npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R${{ vars.OSM_ID }}&format=json&polygon_geojson=" | jq '.[0].geojson' >> comment.md
+             echo "COMMENT=$(cat comment.md)" >> $GITHUB_ENV
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         if: ${{ env.DATA_SIZE > 0 }}
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: $(cat comment.md)
+          body: ${{ env.COMMENT }}
