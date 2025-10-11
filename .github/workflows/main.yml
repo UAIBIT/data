@@ -16,7 +16,7 @@ jobs:
         if: ${{ env.DATA_SIZE > 0 }}
         run: OSM_ID=$(jq '.OSM_ID' issueData.json)
              echo "ASD$OSM_ID"
-             npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R$OSM_ID&format=json&polygon_geojson=" | jq '.[0].geojson' > input.json && mapshaper input.json -simplify 10% -o output.json && cat output.json | jq '.geometries[0]' -c
+             #npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R$OSM_ID&format=json&polygon_geojson=" | jq '.[0].geojson' > input.json && mapshaper input.json -simplify 10% -o output.json && cat output.json | jq '.geometries[0]' -c
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         if: ${{ env.DATA_SIZE > 0 }}
