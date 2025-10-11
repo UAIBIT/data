@@ -34,4 +34,5 @@ jobs:
         if: ${{ env.DATA_SIZE > 0 }}
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: ${{ toJson(readFile('comment.md')) }}
+          body: |
+                $(cat comment.md)
