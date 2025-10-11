@@ -11,10 +11,12 @@ jobs:
       issues: write
     steps:
       - name: Set dynamic variable
-        run: echo -e "${{ github.event.issue.body }}" | sed -n '/NOTREMOVETHISPLEASE/,$p' | sed 's/NOTREMOVETHISPLEASE //'
+        run: echo -e "${{ github.event.issue.body }}" | sed -n '/NOTREMOVETHISPLEASE/,$p' | sed 's/NOTREMOVETHISPLEASE //' > issueData.json
+             echo "DATA_SIZE=jq length issueData.json" >> $GITHUB_ENV
 
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         with:
+          if: ${{ env.DATA_SIZE }} > 0
           issue-number: ${{ github.event.issue.number }}
           body: echo "$DYNAMIC_VAR"
