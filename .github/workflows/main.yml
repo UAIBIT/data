@@ -11,7 +11,7 @@ jobs:
       issues: write
     steps:
       - name: Set dynamic variable
-        run: echo -e "${{ github.event.issue.body }}" | sed -n 's/.*NOTREMOVETHISPLEASE//p' > issueData.json && DATA_SIZE=$(wc -c < issueData.json) && echo "DATA_SIZE=$DATA_SIZE" >> $GITHUB_ENV && cat issueData.json && wc -c < issueData.json
+        run: echo -e "${{ github.event.issue.body }}" | sed -n 's/.*NOTREMOVETHISPLEASE//p' > issueData.json && DATA_SIZE=$(wc -c < issueData.json) && echo "DATA_SIZE=$DATA_SIZE" >> $GITHUB_ENV && cat issueData.json && wc -c < issueData.json && cat issueData.json
       - name: mount data
         if: ${{ env.DATA_SIZE > 0 }}
         run: cat issueData.json
