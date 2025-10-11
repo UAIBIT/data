@@ -23,6 +23,8 @@ jobs:
              echo '```json'"$(jq '.ICON' issueData.json)"'```' >> comment.md
              echo '```json'"$(jq '.NAME' issueData.json)"'```' >> comment.md
              echo '```json'"$(jq '.POPULATION' issueData.json)"'```' >> comment.md
+             echo '```json'"$(jq '.POPULATION_DATE' issueData.json)"'```' >> comment.md
+             echo '```json'"$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')"'```' >> comment.md
              echo '```json'"$(jq '.CONTACT' issueData.json)"'```' >> comment.md
              cat comment.md
       - name: Create or update issue comment
