@@ -37,4 +37,4 @@ jobs:
         if: ${{ env.DATA_SIZE > 0 }}
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: echo "${{ steps.read_file.outputs.contents }}"
+          body: ${{ steps.read_file.outputs.contents }}
