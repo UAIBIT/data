@@ -26,19 +26,19 @@ jobs:
              
              echo '```json ' >> comment.md
              echo '' >> comment.md
-             echo "$(jq '.AREA_TYPE' issueData.json)" >> comment.md
+             echo "$(jq -c '.AREA_TYPE' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
              echo '```json' >> comment.md
              echo '' >> comment.md
-             echo "$(jq '.CONTINENT' issueData.json)" >> comment.md
+             echo "$(jq -c '.CONTINENT' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
              echo '```json' >> comment.md
              echo '' >> comment.md
-             echo "$(jq '.NAME' issueData.json)" >> comment.md
+             echo "$(jq -c '.NAME' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
@@ -50,13 +50,13 @@ jobs:
              
              echo '```json' >> comment.md
              echo '' >> comment.md
-             echo "$(jq '.POPULATION_DATE' issueData.json)" >> comment.md
+             echo "$(jq -c '.POPULATION_DATE' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
              echo '```json' >> comment.md
              echo '' >> comment.md
-             echo "$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')" >> comment.md
+             echo "$(jq -c '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
