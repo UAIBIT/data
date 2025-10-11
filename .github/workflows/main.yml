@@ -27,10 +27,10 @@ jobs:
              echo '```json'"$(jq '.POPULATION_DATE' issueData.json)"'```' >> comment.md
              echo '```json'"$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')"'```' >> comment.md
              echo '```json'"$(jq '.CONTACT' issueData.json)"'```}' >> comment.md
+             echo "::set-output name=packageJson::$(cat comment.md)"
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         if: ${{ env.DATA_SIZE > 0 }}
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: |
-                $(cat comment.md)
+          body: echo "${{ steps.set_var.outputs.packageJson }}"
