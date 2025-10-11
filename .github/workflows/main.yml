@@ -24,12 +24,12 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             #echo '```json ' >> comment.md
-             #echo '' >> comment.md
-             #echo "$(jq '.AREA_TYPE' issueData.json)"' >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
-             #
+             echo '```json ' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.AREA_TYPE' issueData.json)"' >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+             
              #echo '```json' >> comment.md
              #echo '' >> comment.md
              #echo "$(jq '.CONTINENT' issueData.json)" >> comment.md
