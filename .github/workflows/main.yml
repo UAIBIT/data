@@ -68,7 +68,7 @@ jobs:
 
              echo '```json' >> comment.md
              echo '' >> comment.md
-             echo "$(jq '.DESCRIPTION' issueData.json)" >> comment.md
+             echo "$(jq -r '.DESCRIPTION' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
       - name: Read file contents
