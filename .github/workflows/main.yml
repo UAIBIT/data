@@ -11,7 +11,7 @@ jobs:
       issues: write
     steps:
       - name: Set dynamic variable
-        run: echo -e "NOTREMOVETHISPLEASE" | sed -n '/NOTREMOVETHISPLEASE/,$p' | sed 's/NOTREMOVETHISPLEASE //' > issueData.json && DATA_SIZE=$(jq length issueData.json) && echo "DATA_SIZE=$DATA_SIZE" >> $GITHUB_ENV
+        run: echo -e "NOTREMOVETHISPLEASE" | sed -n '/NOTREMOVETHISPLEASE/,$p' | sed 's/NOTREMOVETHISPLEASE //' > issueData.json && DATA_SIZE=$(wc -c issueData.json) && echo "DATA_SIZE=$DATA_SIZE" >> $GITHUB_ENV
 
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
