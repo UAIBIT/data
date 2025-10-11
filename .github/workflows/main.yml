@@ -11,7 +11,8 @@ jobs:
       issues: write # Grant write permission to issues
     steps:
       - name: Set dynamic variable
-        run: echo -e "${{ github.event.issue.body }}" | sed "s/.*${Public}//"
+        run: echo -e "${{ github.event.issue.body }}" | sed -n '/Public/,$p'
+
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         with:
