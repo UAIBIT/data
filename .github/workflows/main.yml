@@ -11,9 +11,14 @@ jobs:
       issues: write # Grant write permission to issues
     steps:
       - name: Set dynamic variable
-        run: echo "${{ github.event.issue.body }}" >> communityData.json
-             cat communityData.json
-             echo 'DYNAMIC_VAR=test'  >> $GITHUB_ENV
+        run: cat <<'EOF' > myfile.txt
+          line 1
+          line 2 with ${{ github.event.issue.body }}
+          another line
+          EOF
+        #echo "" >> communityData.json
+         #    cat communityData.json
+          #   echo 'DYNAMIC_VAR=test'  >> $GITHUB_ENV
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         with:
