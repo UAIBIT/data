@@ -35,6 +35,12 @@ jobs:
              echo "$(jq -r '.CONTINENT' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
+
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.ICON' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              
              echo '```json' >> comment.md
              echo '' >> comment.md
