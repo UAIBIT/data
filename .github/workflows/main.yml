@@ -18,4 +18,4 @@ jobs:
         if: ${{ env.DATA_SIZE }} > 0
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: echo "$DYNAMIC_VAR"
+          body: echo "${{ env.DATA_SIZE }} "
