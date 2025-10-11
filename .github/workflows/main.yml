@@ -30,12 +30,12 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$(jq '.CONTINENT' issueData.json)" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
-             #
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.CONTINENT' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+             
              #echo '```json' >> comment.md
              #echo '' >> comment.md
              #echo "$(jq '.NAME' issueData.json)" >> comment.md
