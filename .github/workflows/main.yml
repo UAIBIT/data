@@ -14,7 +14,7 @@ jobs:
         run: echo -e "${{ github.event.issue.body }}" | sed -n 's/.*NOTREMOVETHISPLEASE//p' > issueData.json && DATA_SIZE=$(wc -c < issueData.json) && echo "DATA_SIZE=$DATA_SIZE" >> $GITHUB_ENV && cat issueData.json && wc -c < issueData.json
       - name: mount data
         if: ${{ env.DATA_SIZE > 0 }}
-        run: npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R${{ vars.OSM_ID }}&format=json&polygon_geojson=" | jq '.[0].geojson' >> comment.md
+        run: npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R${{ vars.OSM_ID }}&format=json&polygon_geojson=" | jq '.[0].geojson' > comment.md
              echo "COMMENT=$(cat comment.md)" >> $GITHUB_ENV
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
