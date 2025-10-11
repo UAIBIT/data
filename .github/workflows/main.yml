@@ -36,35 +36,35 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$(jq '.NAME' issueData.json)" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
-             #
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$(jq '.POPULATION' issueData.json)" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
-             #
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$(jq '.POPULATION_DATE' issueData.json)" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
-             #
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
-             #
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$(jq '.CONTACT' issueData.json)" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.NAME' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+             
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.POPULATION' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+             
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.POPULATION_DATE' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+             
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+             
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.CONTACT' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
