@@ -2,13 +2,13 @@ name: Add comment to issue
 
 on:
   issues:
-    types: [opened, edited] # Trigger on issue opened events
+    types: [opened, edited]
 
 jobs:
   add-issue-comment:
     runs-on: ubuntu-latest
     permissions:
-      issues: write # Grant write permission to issues
+      issues: write
     steps:
       - name: Set dynamic variable
         run: echo -e "${{ github.event.issue.body }}" | sed -n '/Public/,$p' | sed 's/Public //'
@@ -16,5 +16,5 @@ jobs:
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         with:
-          issue-number: ${{ github.event.issue.number }} # Pass the issue ID
+          issue-number: ${{ github.event.issue.number }}
           body: echo "$DYNAMIC_VAR"
