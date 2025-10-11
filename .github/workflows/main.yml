@@ -27,8 +27,6 @@ jobs:
              echo '```json'"$(jq '.POPULATION_DATE' issueData.json)"'```' >> comment.md
              echo '```json'"$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')"'```' >> comment.md
              echo '```json'"$(jq '.CONTACT' issueData.json)"'```}' >> comment.md
-             COMMENT=$(cat comment.md)
-             echo -e "COMMENT=$COMMENT" >> $GITHUB_ENV
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
         if: ${{ env.DATA_SIZE > 0 }}
