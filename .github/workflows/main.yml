@@ -65,6 +65,12 @@ jobs:
              echo "$(jq '.CONTACT' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
+
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.DESCRIPTION' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
