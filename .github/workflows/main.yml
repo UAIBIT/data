@@ -18,14 +18,14 @@ jobs:
              OSM_ID=$(jq '.OSM_ID' issueData.json)
              GEO_JSON=$(npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R$OSM_ID&format=json&polygon_geojson=" | jq '.[0].geojson' > input.json && mapshaper input.json -simplify 10% -o output.json && cat output.json | jq '.geometries[0]' -c)
              echo '```json'"$GEO_JSON"'```' >> comment.md
-             echo '```json'"$(jq '.AREA_TYPE' issueData.json)"'```' >> comment.md
-             echo '```json'"$(jq '.CONTINENT' issueData.json)"'```' >> comment.md
-             echo '```json'"$(jq '.ICON' issueData.json)"'```' >> comment.md
-             echo '```json'"$(jq '.NAME' issueData.json)"'```' >> comment.md
-             echo '```json'"$(jq '.POPULATION' issueData.json)"'```' >> comment.md
-             echo '```json'"$(jq '.POPULATION_DATE' issueData.json)"'```' >> comment.md
-             echo '```json'"$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')"'```' >> comment.md
-             echo '```json'"$(jq '.CONTACT' issueData.json)"'```' >> comment.md
+             #echo '```json'"$(jq '.AREA_TYPE' issueData.json)"'```' >> comment.md
+             #echo '```json'"$(jq '.CONTINENT' issueData.json)"'```' >> comment.md
+             #echo '```json'"$(jq '.ICON' issueData.json)"'```' >> comment.md
+             #echo '```json'"$(jq '.NAME' issueData.json)"'```' >> comment.md
+             #echo '```json'"$(jq '.POPULATION' issueData.json)"'```' >> comment.md
+             #echo '```json'"$(jq '.POPULATION_DATE' issueData.json)"'```' >> comment.md
+             #echo '```json'"$(jq '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')"'```' >> comment.md
+             #echo '```json'"$(jq '.CONTACT' issueData.json)"'```' >> comment.md
              cat comment.md
       - name: Create or update issue comment
         uses: peter-evans/create-or-update-comment@v5
