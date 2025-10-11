@@ -18,4 +18,4 @@ jobs:
         if: ${{ env.DATA_SIZE > 0 }}
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: echo "${{ env.DATA_SIZE }} "
+          body: npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R${{ vars.OSM_ID }}&format=json&polygon_geojson=" | jq '.[0].geojson'
