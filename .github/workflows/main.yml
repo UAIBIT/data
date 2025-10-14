@@ -19,11 +19,11 @@ jobs:
              npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R$OSM_ID&format=json&polygon_geojson=" | jq '.[0].geojson' > input.json
              GEO_JSON=$(mapshaper input.json -simplify 100% -o output.json && cat output.json | jq '.geometries[0]' -c)
              GEO_JSON2=$(curl "https://polygons.openstreetmap.fr/get_geojson.py?id=$OSM_ID&params=0.001-0.005-0.005")
-             echo '```json' >> comment.md
-             echo '' >> comment.md
-             echo "$GEO_JSON" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             #echo '```json' >> comment.md
+             #echo '' >> comment.md
+             #echo "$GEO_JSON" >> comment.md
+             #echo '' >> comment.md
+             #echo '```' >> comment.md
 
              echo '```json' >> comment.md
              echo '' >> comment.md
