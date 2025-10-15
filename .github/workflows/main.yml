@@ -66,13 +66,13 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
 
-             jq '.CONTACT[]' issueData.json | \
-             while IFS= read -r -d $'\0' contactItem; do
-               echo '```' >> comment.md
-               echo '' >> comment.md
-               echo "$contactItem" >> comment.md
-               echo '' >> comment.md
-               echo '```' >> comment.md
+             jq '.CONTACT[]' test.json | while read -r contactItem; 
+             do 
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$contactItem" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              done
 
              echo '```' >> comment.md
