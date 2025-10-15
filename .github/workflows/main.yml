@@ -16,14 +16,7 @@ jobs:
         if: ${{ env.DATA_SIZE > 0 }}
         run: |
              OSM_ID=$(jq '.OSM_ID' issueData.json)
-             npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R$OSM_ID&format=json&polygon_geojson=" | jq '.[0].geojson' > input.json
-             GEO_JSON=$(mapshaper input.json -simplify 100% -o output.json && cat output.json | jq '.geometries[0]' -c)
-             GEO_JSON2=$(curl "https://polygons.openstreetmap.fr/get_geojson.py?id=$OSM_ID&params=0.001-0.005-0.005")
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$GEO_JSON" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
+             GEO_JSON=$(curl "https://polygons.openstreetmap.fr/get_geojson.py?id=$OSM_ID&params=0.001-0.005-0.005")
 
              echo '```json' >> comment.md
              echo '' >> comment.md
@@ -31,13 +24,13 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             echo '```json ' >> comment.md
+             echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq -r '.AREA_TYPE' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             echo '```json' >> comment.md
+             echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq -r '.CONTINENT' issueData.json)" >> comment.md
              echo '' >> comment.md
@@ -49,25 +42,25 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             echo '```json' >> comment.md
+             echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq -r '.NAME' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             echo '```json' >> comment.md
+             echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq '.POPULATION' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             echo '```json' >> comment.md
+             echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq -r '.POPULATION_DATE' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
-             echo '```json' >> comment.md
+             echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')" >> comment.md
              echo '' >> comment.md
@@ -79,7 +72,7 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
 
-             echo '```json' >> comment.md
+             echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq -r '.DESCRIPTION' issueData.json)" >> comment.md
              echo '' >> comment.md
