@@ -65,12 +65,15 @@ jobs:
              echo "$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
-             
-             echo '```json' >> comment.md
-             echo '' >> comment.md
-             echo "$(jq '.CONTACT' issueData.json)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+
+             jq --nul-output '.CONTACT[]' issueData.json | \
+             while IFS= read -r -d $'\0' contactItem; do
+               echo '```' >> comment.md
+               echo '' >> comment.md
+               echo "$contactItem" >> comment.md
+               echo '' >> comment.md
+               echo '```' >> comment.md
+             done
 
              echo '```' >> comment.md
              echo '' >> comment.md
