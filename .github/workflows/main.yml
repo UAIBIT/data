@@ -20,7 +20,7 @@ jobs:
 
              echo '```json' >> comment.md
              echo '' >> comment.md
-             echo "$GEO_JSON2" >> comment.md
+             echo "$GEO_JSON" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
