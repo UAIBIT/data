@@ -66,7 +66,7 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
 
-             jq '.CONTACT[]' test.json | while read -r contactItem; 
+             jq '.CONTACT[]' issueData.json | while read -r contactItem; 
              do 
              echo '```' >> comment.md
              echo '' >> comment.md
