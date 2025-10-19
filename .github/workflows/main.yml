@@ -88,6 +88,12 @@ jobs:
              echo "https://btcmap.org/community/$URL_ALIAS" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
+
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "[Community](https://btcmap.org/community/$URL_ALIAS)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
