@@ -59,10 +59,12 @@ jobs:
              echo "$(jq -r '.POPULATION_DATE' issueData.json)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
+
+             URL_ALIAS=$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
              
              echo '```' >> comment.md
              echo '' >> comment.md
-             echo "$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')" >> comment.md
+             echo "$URL_ALIAS" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
 
@@ -78,6 +80,12 @@ jobs:
              echo '```' >> comment.md
              echo '' >> comment.md
              echo "$(jq -r '.DESCRIPTION' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "https://btcmap.org/community/$URL_ALIAS" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
       - name: Read file contents
