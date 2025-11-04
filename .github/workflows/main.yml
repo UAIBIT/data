@@ -68,6 +68,12 @@ jobs:
              echo '' >> comment.md
              echo '```' >> comment.md
 
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$LIGHTNING_TIPS" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+
              jq '.CONTACT[]' -r issueData.json | while read -r contactItem; 
              do 
              echo '```' >> comment.md
