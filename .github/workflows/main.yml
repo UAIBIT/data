@@ -18,94 +18,94 @@ jobs:
              OSM_ID=$(jq '.OSM_ID' issueData.json)
              GEO_JSON=$(curl "https://polygons.openstreetmap.fr/get_geojson.py?id=$OSM_ID&params=0.001-0.005-0.005")
 
-             #echo '```json' >> comment.md
-             #echo '' >> comment.md
-             #echo "$GEO_JSON" >> comment.md
-             #echo '' >> comment.md
-             #echo '```' >> comment.md
+             echo '```json' >> comment.md
+             echo '' >> comment.md
+             echo "$GEO_JSON" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.AREA_TYPE' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.AREA_TYPE' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.CONTINENT' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.CONTINENT' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.ICON' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.ICON' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.NAME' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.NAME' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq '.POPULATION' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq '.POPULATION' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
              
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.POPULATION_DATE' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.POPULATION_DATE' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
 
-             # URL_ALIAS=$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
+             URL_ALIAS=$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
              
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$URL_ALIAS" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$URL_ALIAS" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
 
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.LIGHTNING_TIPS' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.LIGHTNING_TIPS' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
 
-             # jq '.CONTACT[]' -r issueData.json | while read -r contactItem; 
-             # do 
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$contactItem" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
-             # done
+             jq '.CONTACT[]' -r issueData.json | while read -r contactItem; 
+             do 
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$contactItem" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
+             done
 
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.DESCRIPTION' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.DESCRIPTION' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
 
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "$(jq -r '.ORGANIZATION' issueData.json)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "$(jq -r '.ORGANIZATION' issueData.json)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
 
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "https://btcmap.org/community/$URL_ALIAS" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "https://btcmap.org/community/$URL_ALIAS" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
 
-             # echo '```' >> comment.md
-             # echo '' >> comment.md
-             # echo "[Community](https://btcmap.org/community/$URL_ALIAS)" >> comment.md
-             # echo '' >> comment.md
-             # echo '```' >> comment.md
+             echo '```' >> comment.md
+             echo '' >> comment.md
+             echo "[Community](https://btcmap.org/community/$URL_ALIAS)" >> comment.md
+             echo '' >> comment.md
+             echo '```' >> comment.md
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
