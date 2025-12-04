@@ -18,7 +18,7 @@ jobs:
              OSM_ID=$(jq '.OSM_ID' issueData.json)
              GEO_JSON=$(curl "https://polygons.openstreetmap.fr/get_geojson.py?id=$OSM_ID&params=0.001-0.005-0.005")
 
-             echo '```json' >> comment.md
+             echo '```geojson' >> comment.md
              echo '' >> comment.md
              echo "$GEO_JSON" >> comment.md
              echo '' >> comment.md
