@@ -26,7 +26,8 @@ jobs:
              echo "$GEO_JSON" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
-
+             
+             echo $GEO_JSON2 |  jq '.coordinates[0][0] | length' >> comment.md
              echo '```geojson' >> comment.md
              echo '' >> comment.md
              echo "$GEO_JSON2" >> comment.md
