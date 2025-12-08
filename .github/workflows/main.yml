@@ -21,12 +21,8 @@ jobs:
              GEO_JSON2=$(mapshaper input.json -simplify 3% -o output.json && cat output.json | jq '.geometries[0]' -c)
              echo "OSM Fr polygons: " >> comment.md
              echo $GEO_JSON |  jq '.coordinates[0][0] | length' >> comment.md
-             
-             echo '```geojson' >> comment.md
-             echo '' >> comment.md
-             echo "$GEO_JSON" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+
+             bash writeOnComment.sh $GEO_JSON geojson
 
              echo "Mapshaper polygons: " >> comment.md
              echo $GEO_JSON2 |  jq '.coordinates[0] | length' >> comment.md
