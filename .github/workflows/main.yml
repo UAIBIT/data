@@ -26,7 +26,7 @@ jobs:
   
              bash writeOnComment.sh "$GEO_JSON" "geojson"
 
-             echo "Mapshaper polygons: " >> comment.md
+             echo "Mapshaper polygons:" >> comment.md
              echo $GEO_JSON2 |  jq '.coordinates[0] | length' >> comment.md
              echo '```geojson' >> comment.md
              echo '' >> comment.md
