@@ -24,7 +24,7 @@ jobs:
              
              bash writeOnComment.sh $(echo $GEO_JSON |  jq '.coordinates[0][0] | length') "OSM fr polygons:" ""
              bash writeOnComment.sh "$GEO_JSON" "" "geojson"
-             bash writeOnComment.sh $(echo $GEO_JSON2 |  jq '.coordinates[0] | length' >> comment.md) "Mapshaper polygons:" ""
+             bash writeOnComment.sh $(echo $GEO_JSON2 |  jq '.coordinates[0] | length') "Mapshaper polygons:" ""
              bash writeOnComment.sh "$GEO_JSON2" "" "geojson"
              
              echo '```' >> comment.md
