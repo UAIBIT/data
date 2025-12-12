@@ -21,18 +21,11 @@ jobs:
              GEO_JSON=$(curl "https://polygons.openstreetmap.fr/get_geojson.py?id=$OSM_ID&params=0.001-0.005-0.005")
              npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R$OSM_ID&format=json&polygon_geojson=" | jq '.[0].geojson' > input.json
              GEO_JSON2=$(mapshaper input.json -simplify 3% -o output.json && cat output.json | jq '.geometries[0]' -c)
-             echo "OSM Fr polygons: " >> comment.md
-             echo $GEO_JSON |  jq '.coordinates[0][0] | length' >> comment.md
-  
-             bash writeOnComment.sh "$GEO_JSON" "OSM fr polygons:" "geojson"
-
-             echo "Mapshaper polygons:" >> comment.md
-             echo $GEO_JSON2 |  jq '.coordinates[0] | length' >> comment.md
-             echo '```geojson' >> comment.md
-             echo '' >> comment.md
-             echo "$GEO_JSON2" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             
+             bash writeOnComment.sh $(echo $GEO_JSON |  jq '.coordinates[0][0] | length') "OSM fr polygons:" "geojson"
+             bash writeOnComment.sh "$GEO_JSON" "" ""
+             bash writeOnComment.sh $(echo $GEO_JSON2 |  jq '.coordinates[0] | length' >> comment.md) "Mapshaper polygons:" ""
+             bash writeOnComment.sh "$GEO_JSON2" "" ""
              
              echo '```' >> comment.md
              echo '' >> comment.md
