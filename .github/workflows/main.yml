@@ -12,6 +12,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip' # Automatically caches downloaded packages for speed
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Set dynamic variable
         run: echo -e "${{ github.event.issue.body }}" | awk '/NOTREMOVETHISPLEASE/{flag=1; next} flag' > issueData.json && DATA_SIZE=$(wc -c < issueData.json) && echo "DATA_SIZE=$DATA_SIZE" >> $GITHUB_ENV
       - name: mount data
