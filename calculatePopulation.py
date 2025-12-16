@@ -8,7 +8,7 @@ import requests
 from requests.exceptions import RequestException
 import shutil
 import json
-d = json.load("{}")
+d = ""
 
 with open('issueData.json', 'r') as f:
     # Use json.load() to read directly from the file object
