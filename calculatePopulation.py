@@ -9,7 +9,7 @@ from requests.exceptions import RequestException
 import shutil
 
 # --- Configuration ---
-GEOJSON_FILE = "sample_data/boundaries.geojson"
+GEOJSON_FILE = "boundaries.geojson"
 RASTER_FILE = "population_raster.tif"  # Local name for the downloaded file
 OUTPUT_FILE = "population_count.txt"
 
