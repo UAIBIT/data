@@ -9,10 +9,14 @@ from requests.exceptions import RequestException
 import shutil
 import json
 
-with open('issueData.json') as json_data:
-    d = json.loads(json_data)
-    json_data.close()
-    print(d.COUNTRY_CODE)
+import json
+
+with open('issueData.json', 'r') as f:
+    # Use json.load() to read directly from the file object
+    d = json.load(f)
+    
+    # Access dictionary values using brackets
+    print(d['COUNTRY_CODE'])
 
 
 # --- Configuration ---
