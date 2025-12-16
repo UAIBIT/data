@@ -64,7 +64,7 @@ jobs:
              
              echo '```' >> comment.md
              echo '' >> comment.md
-             echo "$(jq '.POPULATION' issueData.json)" >> comment.md
+             echo "$(cat population_count.txt)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
              
