@@ -8,6 +8,10 @@ import requests
 from requests.exceptions import RequestException
 import shutil
 import json
+from email.utils import parsedate_to_datetime
+
+
+# Output will be: 2020-10-21
 d = ""
 
 with open('issueData.json', 'r') as f:
@@ -27,7 +31,30 @@ OUTPUT_FILE = "population_count.txt"
 # NOTE: Ensure this raster file covers the area defined by your GEOJSON_FILE!
 RASTER_URL = f"https://data.worldpop.org/GIS/Population/Global_2000_2020/2020/{d['COUNTRY_CODE']}/{d['COUNTRY_CODE'].lower()}_ppp_2020_UNadj.tif"
 # ---------------------
+def get_remote_file_date_formatted(url):
+    try:
+        response = requests.head(url)
+        
+        if 'Last-Modified' in response.headers:
+            # 1. Parse the raw string into a Python datetime object
+            raw_date = response.headers['Last-Modified']
+            dt_object = parsedate_to_datetime(raw_date)
+            
+            # 2. Format it to YYYY-MM-DD
+            formatted_date = dt_object.strftime('%Y-%m-%d')
+            return formatted_date
+            
+        else:
+            return "Unknown"
+            
+    except Exception as e:
+        print(f"Warning: Could not get date. {e}")
+        return "Unknown"
 
+# --- Usage Example ---
+
+date_string = get_remote_file_date_formatted(RASTER_URL)
+print(f"📅 Data Date: {date_string}")
 def download_file(url, local_filename):
     """Downloads a file from a URL to a local path."""
     print(f"Downloading {os.path.basename(url)}...")
