@@ -54,7 +54,8 @@ def get_remote_file_date_formatted(url):
 # --- Usage Example ---
 
 date_string = get_remote_file_date_formatted(RASTER_URL)
-print(f"📅 Data Date: {date_string}")
+with open('populationDate.txt', 'w') as f:
+  f.write(date_string)
 def download_file(url, local_filename):
     """Downloads a file from a URL to a local path."""
     print(f"Downloading {os.path.basename(url)}...")
