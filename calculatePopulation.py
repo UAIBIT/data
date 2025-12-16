@@ -8,15 +8,14 @@ import requests
 from requests.exceptions import RequestException
 import shutil
 import json
-
-import json
+d = json.load("{}")
 
 with open('issueData.json', 'r') as f:
     # Use json.load() to read directly from the file object
     d = json.load(f)
     
     # Access dictionary values using brackets
-    print(d['COUNTRY_CODE'])
+    print()
 
 
 # --- Configuration ---
@@ -26,7 +25,7 @@ OUTPUT_FILE = "population_count.txt"
 
 # --- REAL RASTER URL (Example: Sierra Leone 2020) ---
 # NOTE: Ensure this raster file covers the area defined by your GEOJSON_FILE!
-RASTER_URL = "https://data.worldpop.org/GIS/Population/Global_2000_2020/2020/CHE/che_ppp_2020_UNadj.tif"
+RASTER_URL = f"https://data.worldpop.org/GIS/Population/Global_2000_2020/2020/{d['COUNTRY_CODE']}/{d['COUNTRY_CODE'].lower()}_ppp_2020_UNadj.tif"
 # ---------------------
 
 def download_file(url, local_filename):
