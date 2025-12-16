@@ -7,6 +7,13 @@ import os
 import requests
 from requests.exceptions import RequestException
 import shutil
+import json
+
+with open('issueData.json') as json_data:
+    d = json.loads(json_data)
+    json_data.close()
+    print(d.COUNTRY_CODE)
+
 
 # --- Configuration ---
 GEOJSON_FILE = "boundaries.geojson"
