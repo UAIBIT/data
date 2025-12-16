@@ -70,7 +70,7 @@ jobs:
              
              echo '```' >> comment.md
              echo '' >> comment.md
-             echo "$(jq -r '.POPULATION_DATE' issueData.json)" >> comment.md
+             echo "$(cat populationDate.txt)" >> comment.md
              echo '' >> comment.md
              echo '```' >> comment.md
 
