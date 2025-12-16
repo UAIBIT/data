@@ -89,7 +89,7 @@ def calculate_population():
             print(f"Total Estimated Population: {final_count:,}")
 
             with open(OUTPUT_FILE, 'w') as f:
-                f.write(final_count)
+                f.write(str(final_count))
 
             print(f"Result written to {OUTPUT_FILE}")
 
