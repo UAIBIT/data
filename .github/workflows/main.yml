@@ -38,12 +38,7 @@ jobs:
              bash writeOnComment.sh $(echo $GEO_JSON2 |  jq '.coordinates[0] | length') "Mapshaper polygons:" ""
              bash writeOnComment.sh "$GEO_JSON2" "" "geojson"
              bash writeOnComment.sh "$(jq -r '.AREA_TYPE' issueData.json)" "Area type:" ""
-             
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$(jq -r '.CONTINENT' issueData.json)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$(jq -r '.CONTINENT' issueData.json)" "Continent:" ""
              
              echo '```' >> comment.md
              echo '' >> comment.md
