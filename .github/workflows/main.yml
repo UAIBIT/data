@@ -39,12 +39,7 @@ jobs:
              bash writeOnComment.sh "$GEO_JSON2" "" "geojson"
              bash writeOnComment.sh "$(jq -r '.AREA_TYPE' issueData.json)" "Area type:" ""
              bash writeOnComment.sh "$(jq -r '.CONTINENT' issueData.json)" "Continent:" ""
-             
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$(jq -r '.ICON' issueData.json)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$(jq -r '.ICON' issueData.json)" "Icon:" ""
              
              echo '```' >> comment.md
              echo '' >> comment.md
