@@ -40,12 +40,7 @@ jobs:
              bash writeOnComment.sh "$(jq -r '.AREA_TYPE' issueData.json)" "Area type:" ""
              bash writeOnComment.sh "$(jq -r '.CONTINENT' issueData.json)" "Continent:" ""
              bash writeOnComment.sh "$(jq -r '.ICON' issueData.json)" "Icon:" ""
-             
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$(jq -r '.NAME' issueData.json)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$(jq -r '.NAME' issueData.json)" "Name:" ""
              
              echo '```' >> comment.md
              echo '' >> comment.md
