@@ -41,12 +41,7 @@ jobs:
              bash writeOnComment.sh "$(jq -r '.CONTINENT' issueData.json)" "Continent:" ""
              bash writeOnComment.sh "$(jq -r '.ICON' issueData.json)" "Icon:" ""
              bash writeOnComment.sh "$(jq -r '.NAME' issueData.json)" "Name:" ""
-             
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$(cat population_count.txt)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$(cat population_count.txt)" "Population:" ""
              
              echo '```' >> comment.md
              echo '' >> comment.md
