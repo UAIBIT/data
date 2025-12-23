@@ -42,12 +42,7 @@ jobs:
              bash writeOnComment.sh "$(jq -r '.ICON' issueData.json)" "Icon:" ""
              bash writeOnComment.sh "$(jq -r '.NAME' issueData.json)" "Name:" ""
              bash writeOnComment.sh "$(cat population_count.txt)" "Population:" ""
-             
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$(cat populationDate.txt)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$(cat populationDate.txt)" "Population Date:" ""
 
              URL_ALIAS=$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
              
