@@ -32,6 +32,7 @@ jobs:
              GEO_JSON2=$(mapshaper input.json -simplify 3% -o output.json && cat output.json | jq '.geometries[0]' -c)
              echo $GEO_JSON2 > boundaries.geojson
              python3 calculatePopulation.py
+             URL_ALIAS=$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
              
              bash writeOnComment.sh $(echo $GEO_JSON |  jq '.coordinates[0][0] | length') "OSM fr polygons:" ""
              bash writeOnComment.sh "$GEO_JSON" "" "geojson"
@@ -43,14 +44,7 @@ jobs:
              bash writeOnComment.sh "$(jq -r '.NAME' issueData.json)" "Name:" ""
              bash writeOnComment.sh "$(cat population_count.txt)" "Population:" ""
              bash writeOnComment.sh "$(cat populationDate.txt)" "Population Date:" ""
-
-             URL_ALIAS=$(jq -r '.NAME' issueData.json | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
-             
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$URL_ALIAS" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$URL_ALIAS" "Url Alias:" ""
 
              echo '```' >> comment.md
              echo '' >> comment.md
