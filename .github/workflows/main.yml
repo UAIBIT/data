@@ -45,12 +45,7 @@ jobs:
              bash writeOnComment.sh "$(cat population_count.txt)" "Population:" ""
              bash writeOnComment.sh "$(cat populationDate.txt)" "Population Date:" ""
              bash writeOnComment.sh "$URL_ALIAS" "Url Alias:" ""
-
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$(jq -r '.LIGHTNING_TIPS' issueData.json)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$(jq -r '.LIGHTNING_TIPS' issueData.json)" "Lightning Tips:" ""
 
              jq '.CONTACT[]' -r issueData.json | while read -r contactItem; 
              do 
