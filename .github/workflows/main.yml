@@ -49,11 +49,7 @@ jobs:
 
              jq '.CONTACT[]' -r issueData.json | while read -r contactItem; 
              do 
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$contactItem" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$contactItem" "Contact:" ""
              done
 
              echo '```' >> comment.md
