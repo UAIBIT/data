@@ -53,12 +53,7 @@ jobs:
              done
 
              bash writeOnComment.sh "$(jq -r '.DESCRIPTION' issueData.json)" "Description:" ""
-
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "$(jq -r '.ORGANIZATION' issueData.json)" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "$(jq -r '.ORGANIZATION' issueData.json)" "Organization:" ""
 
              echo '```' >> comment.md
              echo '' >> comment.md
