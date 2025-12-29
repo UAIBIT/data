@@ -54,12 +54,7 @@ jobs:
 
              bash writeOnComment.sh "$(jq -r '.DESCRIPTION' issueData.json)" "Description:" ""
              bash writeOnComment.sh "$(jq -r '.ORGANIZATION' issueData.json)" "Organization:" ""
-
-             echo '```' >> comment.md
-             echo '' >> comment.md
-             echo "https://btcmap.org/community/$URL_ALIAS" >> comment.md
-             echo '' >> comment.md
-             echo '```' >> comment.md
+             bash writeOnComment.sh "https://btcmap.org/community/$URL_ALIAS" "Url alias::" ""
 
              echo '```' >> comment.md
              echo '' >> comment.md
