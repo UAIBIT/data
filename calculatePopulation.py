@@ -7,43 +7,28 @@ import requests
 import shutil
 from email.utils import parsedate_to_datetime
 
-# --- Configuration ---
-GEOJSON_FILE = "boundaries.geojson"
-RASTER_FILE = "population_raster.tif"
-OUTPUT_FILE = "population_count.txt"
-DATE_OUTPUT_FILE = "populationDate.txt"
-
-# URL for a lightweight world boundaries file to detect the country
-WORLD_MAP_URL = "https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson"
+# Use a more reliable, optimized world map source
+WORLD_MAP_URL = "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip"
 
 def get_country_code_from_geometry(gdf):
-    """
-    Spatially joins the user GeoJSON with a world map to find the country code.
-    Uses a projected CRS for accurate centroid calculation.
-    """
     print("🌍 Identifying country from coordinates...")
     try:
-        # Load world boundaries
-        world = gpd.read_file(WORLD_MAP_URL)
+        # Load world boundaries - using 'pyogrio' engine if available for speed
+        # This map is low-res (110m) so it loads in seconds
+        world = gpd.read_file(WORLD_MAP_URL, engine='pyogrio' if shutil.which('ogr2ogr') else None)
         
-        # 1. Project to a meter-based CRS (EPSG:3857) to calculate a valid centroid
-        # 2. Then project back to WGS84 (EPSG:4326) to match the world map
-        centroid_gdf = gdf.to_crs(epsg=3857).centroid.to_crs(epsg=4326).to_frame('geometry')
+        # Accurate Centroid Calculation (avoiding the warning and the hang)
+        # We use a simple representative_point() if it's a geographic CRS
+        point = gdf.representative_point().to_crs(world.crs)
         
-        # Ensure world map is also in WGS84
-        if world.crs != "EPSG:4326":
-            world = world.to_crs(epsg=4326)
-        
-        # Spatial Join: Find which country contains the center of the user's shape
-        joined = gpd.sjoin(centroid_gdf, world, predicate='within')
+        # Spatial Join
+        joined = gpd.sjoin(point.to_frame('geometry'), world, predicate='within')
         
         if not joined.empty:
-            # Check common ISO columns
-            for col in ['ISO_A3', 'iso_a3', 'ADM0_A3']:
+            # Natural Earth uses 'ADM0_A3' or 'ISO_A3'
+            for col in ['ADM0_A3', 'ISO_A3', 'iso_a3']:
                 if col in joined.columns:
-                    code = str(joined.iloc[0][col]).upper()
-                    if code != "NAN" and len(code) == 3:
-                        return code
+                    return str(joined.iloc[0][col]).upper()
         return None
     except Exception as e:
         print(f"❌ Error during spatial detection: {e}")
