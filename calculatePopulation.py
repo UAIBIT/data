@@ -4,135 +4,106 @@ from rasterio.mask import mask
 import numpy as np
 import os
 import requests
-from requests.exceptions import RequestException
 import shutil
 from email.utils import parsedate_to_datetime
 
 # --- Configuration ---
 GEOJSON_FILE = "boundaries.geojson"
-RASTER_FILE = "population_raster.tif"  # Local name for the downloaded file
+RASTER_FILE = "population_raster.tif"
 OUTPUT_FILE = "population_count.txt"
 DATE_OUTPUT_FILE = "populationDate.txt"
-# ---------------------
+
+# URL for a lightweight world boundaries file to detect the country
+WORLD_MAP_URL = "https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson"
+
+def get_country_code_from_geometry(gdf):
+    """
+    Spatially joins the user GeoJSON with a world map to find the country code.
+    """
+    print("🌍 Identifying country from coordinates...")
+    try:
+        # Load world boundaries
+        world = gpd.read_file(WORLD_MAP_URL)
+        
+        # Ensure both use the same CRS (WGS84)
+        if gdf.crs != world.crs:
+            gdf = gdf.to_crs(world.crs)
+        
+        # Spatial Join: Find which country contains the center of the user's shape
+        # We use the centroid to handle shapes that might slightly cross borders
+        joined = gpd.sjoin(gdf.centroid.to_frame('geometry'), world, predicate='within')
+        
+        if not joined.empty:
+            # Common columns in world maps are 'ISO_A3' or 'iso_a3'
+            for col in ['ISO_A3', 'iso_a3', 'ADM0_A3']:
+                if col in joined.columns:
+                    return str(joined.iloc[0][col]).upper()
+        return None
+    except Exception as e:
+        print(f"❌ Error during spatial detection: {e}")
+        return None
 
 def get_remote_file_date_formatted(url):
     try:
-        response = requests.head(url)
+        response = requests.head(url, timeout=10)
         if 'Last-Modified' in response.headers:
-            raw_date = response.headers['Last-Modified']
-            dt_object = parsedate_to_datetime(raw_date)
+            dt_object = parsedate_to_datetime(response.headers['Last-Modified'])
             return dt_object.strftime('%Y-%m-%d')
-        else:
-            return "Unknown"
-    except Exception as e:
-        print(f"Warning: Could not get date. {e}")
         return "Unknown"
-
-def download_file(url, local_filename):
-    """Downloads a file from a URL to a local path."""
-    print(f"Downloading {os.path.basename(url)}...")
-    try:
-        with requests.get(url, stream=True) as r:
-            r.raise_for_status()
-            with open(local_filename, 'wb') as f:
-                shutil.copyfileobj(r.raw, f)
-        print(f"Download successful. Saved to {local_filename}")
-        return True
-    except RequestException as e:
-        print(f"ERROR: Could not download raster file from {url}. Error: {e}")
-        return False
-    except Exception as e:
-        print(f"An unexpected error occurred during download: {e}")
-        return False
+    except: return "Unknown"
 
 def calculate_population():
-    print("Starting population calculation...")
-
-    # 1. Load GeoJSON Boundary FIRST
     if not os.path.exists(GEOJSON_FILE):
-        print(f"ERROR: GeoJSON boundary file not found at {GEOJSON_FILE}")
+        print("❌ Error: boundaries.geojson not found.")
         return
 
-    try:
-        gpd_boundary = gpd.read_file(GEOJSON_FILE)
-    except Exception as e:
-        print(f"ERROR: Could not read GeoJSON file. {e}")
-        return
+    # 1. Load User GeoJSON
+    user_gdf = gpd.read_file(GEOJSON_FILE)
 
-    # --- EXTRACT COUNTRY CODE FROM GEOJSON ---
-    try:
-        # We take the code from the first feature (row 0)
-        # NOTE: Verify your GeoJSON has a property named 'COUNTRY_CODE'. 
-        # If it uses 'ISO', 'id', or 'adm0_a3', change the string below!
-        country_code = gpd_boundary.iloc[0]['COUNTRY_CODE'] 
-        
-        print(f"📍 Detected Country Code from GeoJSON: {country_code}")
-    except KeyError:
-        print("❌ ERROR: Property 'COUNTRY_CODE' not found in GeoJSON. Please check your column names.")
-        print(f"Available columns: {gpd_boundary.columns.tolist()}")
-        return
-    except IndexError:
-        print("❌ ERROR: The GeoJSON appears to be empty.")
-        return
-
-    # --- CONSTRUCT DYNAMIC URL ---
-    # Now we build the URL using the extracted code
-    raster_url = f"https://data.worldpop.org/GIS/Population/Global_2000_2020/2020/{country_code.upper()}/{country_code.lower()}_ppp_2020_UNadj.tif"
-    print(f"🔗 Target Raster URL: {raster_url}")
-
-    # 2. Get Date from Remote URL
-    date_string = get_remote_file_date_formatted(raster_url)
-    print(f"📅 Remote Data Date: {date_string}")
+    # 2. Process Geometry to get Country Code
+    country_code = get_country_code_from_geometry(user_gdf)
     
+    if not country_code or country_code == "NAN":
+        print("❌ Could not determine country. Is the GeoJSON in the ocean or outside known borders?")
+        return
+
+    print(f"📍 Geometry detected in: {country_code}")
+
+    # 3. Construct URL
+    raster_url = f"https://data.worldpop.org/GIS/Population/Global_2000_2020/2020/{country_code}/{country_code.lower()}_ppp_2020_UNadj.tif"
+
+    # 4. Get Date and Save
+    date_str = get_remote_file_date_formatted(raster_url)
     with open(DATE_OUTPUT_FILE, 'w') as f:
-        f.write(date_string)
+        f.write(date_str)
 
-    # 3. Automatic Raster Download
+    # 5. Download Raster
     if not os.path.exists(RASTER_FILE):
-        if not download_file(raster_url, RASTER_FILE):
-            print("Aborting calculation due to download failure.")
+        print(f"📥 Downloading raster for {country_code}...")
+        r = requests.get(raster_url, stream=True)
+        if r.status_code != 200:
+            print(f"❌ Raster not found on WorldPop for code {country_code}. Check if code is correct.")
             return
+        with open(RASTER_FILE, 'wb') as f:
+            shutil.copyfileobj(r.raw, f)
 
-    # 4. Process Population Data
-    geoms = gpd_boundary.geometry.tolist()
-
+    # 6. Spatial Masking & Calculation
     try:
         with rasterio.open(RASTER_FILE) as src:
-            # Reproject GeoJSON if necessary
-            if gpd_boundary.crs != src.crs:
-                print(f"Warning: GeoJSON CRS ({gpd_boundary.crs}) does not match Raster CRS ({src.crs}). Reprojecting GeoJSON.")
-                gpd_boundary = gpd_boundary.to_crs(src.crs)
-                geoms = gpd_boundary.geometry.tolist()
+            if user_gdf.crs != src.crs:
+                user_gdf = user_gdf.to_crs(src.crs)
+            
+            out_image, _ = mask(src, user_gdf.geometry, crop=True)
+            data = out_image[0]
+            valid_data = data[(data != src.nodata) & (data >= 0)]
+            total_pop = int(np.sum(valid_data))
 
-            print(f"Clipping raster '{RASTER_FILE}' using GeoJSON boundary...")
-            out_image, out_transform = mask(src, geoms, crop=True)
-
-            nodata = src.nodata
-            if nodata is None:
-                nodata = 0
-
-            valid_population_values = out_image[0][out_image[0] != nodata]
-            total_population = np.sum(valid_population_values)
-            final_count = int(total_population)
-
-            # Output Result
-            print(f"\n✅ Calculation Complete!")
-            print(f"Total Estimated Population: {final_count:,}")
-
+            print(f"✅ Calculation Complete: {total_pop:,} people.")
             with open(OUTPUT_FILE, 'w') as f:
-                f.write(str(final_count))
-
-            print(f"Result written to {OUTPUT_FILE}")
-
-    except rasterio.RasterioIOError as e:
-        print(f"ERROR: Could not process raster file: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred during processing: {e}")
-
-    # 5. Cleanup
-    if os.path.exists(RASTER_FILE):
-        os.remove(RASTER_FILE)
-        print(f"Cleaned up downloaded file: {RASTER_FILE}")
+                f.write(str(total_pop))
+    finally:
+        if os.path.exists(RASTER_FILE):
+            os.remove(RASTER_FILE)
 
 if __name__ == "__main__":
     calculate_population()
