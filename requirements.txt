@@ -2,3 +2,4 @@ geopandas
 rasterio
 numpy
 requests
+pyogrio
