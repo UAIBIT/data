@@ -19,25 +19,31 @@ WORLD_MAP_URL = "https://raw.githubusercontent.com/datasets/geo-boundaries-world
 def get_country_code_from_geometry(gdf):
     """
     Spatially joins the user GeoJSON with a world map to find the country code.
+    Uses a projected CRS for accurate centroid calculation.
     """
     print("🌍 Identifying country from coordinates...")
     try:
         # Load world boundaries
         world = gpd.read_file(WORLD_MAP_URL)
         
-        # Ensure both use the same CRS (WGS84)
-        if gdf.crs != world.crs:
-            gdf = gdf.to_crs(world.crs)
+        # 1. Project to a meter-based CRS (EPSG:3857) to calculate a valid centroid
+        # 2. Then project back to WGS84 (EPSG:4326) to match the world map
+        centroid_gdf = gdf.to_crs(epsg=3857).centroid.to_crs(epsg=4326).to_frame('geometry')
+        
+        # Ensure world map is also in WGS84
+        if world.crs != "EPSG:4326":
+            world = world.to_crs(epsg=4326)
         
         # Spatial Join: Find which country contains the center of the user's shape
-        # We use the centroid to handle shapes that might slightly cross borders
-        joined = gpd.sjoin(gdf.centroid.to_frame('geometry'), world, predicate='within')
+        joined = gpd.sjoin(centroid_gdf, world, predicate='within')
         
         if not joined.empty:
-            # Common columns in world maps are 'ISO_A3' or 'iso_a3'
+            # Check common ISO columns
             for col in ['ISO_A3', 'iso_a3', 'ADM0_A3']:
                 if col in joined.columns:
-                    return str(joined.iloc[0][col]).upper()
+                    code = str(joined.iloc[0][col]).upper()
+                    if code != "NAN" and len(code) == 3:
+                        return code
         return None
     except Exception as e:
         print(f"❌ Error during spatial detection: {e}")
