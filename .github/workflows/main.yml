@@ -80,6 +80,11 @@ jobs:
            bash writeOnComment.sh "$(jq -r '.NAME' extIssueData.json)" "Name:" ""
            bash writeOnComment.sh "$URL_ALIAS" "Url Alias:" ""
 
+           jq '.CONTACT[]' -r extIssueData.json | while read -r contactItem; 
+           do 
+             bash writeOnComment.sh "$contactItem" "Contact:" ""
+           done
+
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
