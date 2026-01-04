@@ -84,6 +84,7 @@ jobs:
            do 
              bash writeOnComment.sh "$contactItem" "Contact:" ""
            done
+           bash writeOnComment.sh "$(jq -r '.DESCRIPTION' extIssueData.json)" "Description:" ""
 
       - name: Read file contents
         id: read_file
