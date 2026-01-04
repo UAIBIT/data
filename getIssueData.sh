@@ -42,7 +42,8 @@ echo $issueBody
 communityName=$(echo $issueBody | jq '."Community name"')
 cat << EOF
 {
-  "name": "$communityName"
+  "NAME": "$communityName",
+  "AREA_TYPE": "Community"
 }
 EOF
 
