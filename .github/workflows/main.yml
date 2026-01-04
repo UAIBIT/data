@@ -78,6 +78,7 @@ jobs:
            bash writeOnComment.sh "$(jq -r '.CONTINENT' issueData.json)" "Continent:" ""
            bash writeOnComment.sh "$(jq -r '.ICON' extIssueData.json)" "Icon:" ""
            bash writeOnComment.sh "$(jq -r '.NAME' extIssueData.json)" "Name:" ""
+           bash writeOnComment.sh "$URL_ALIAS" "Url Alias:" ""
 
       - name: Read file contents
         id: read_file
