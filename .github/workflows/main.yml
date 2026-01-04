@@ -74,6 +74,7 @@ jobs:
            bash writeOnComment.sh "$(jq -r '.AREA_TYPE' issueData.json)" "Area type:" ""
            bash writeOnComment.sh "$(jq -r '.CONTINENT' issueData.json)" "Continent:" ""
            bash writeOnComment.sh "$(jq -r '.ICON' issueData.json)" "Icon:" ""
+           bash writeOnComment.sh "$(jq -r '.NAME' issueData.json)" "Name:" ""
 
       - name: Read file contents
         id: read_file
