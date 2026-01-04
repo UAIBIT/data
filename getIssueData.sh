@@ -46,13 +46,15 @@ contact=$(echo $issueBody | jq -r '."Social links"')
 description=$(echo $issueBody | jq -r '.Notes')
 cat << EOF
 {
+  "OSM_ID":"",
   "NAME": "$communityName",
   "AREA_TYPE": "Community",
   "CONTINENT": "",
   "ICON":"$icon",
   "LIGHTNING_TIPS":"$lightningTips",
   "CONTACT":$contact,
-  "DESCRIPTION":"$description"
+  "DESCRIPTION":"$description",
+  "ORGANIZATION":""
 }
 EOF
 
