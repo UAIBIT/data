@@ -85,7 +85,7 @@ jobs:
              bash writeOnComment.sh "$contactItem" "Contact:" ""
            done
            bash writeOnComment.sh "$(jq -r '.DESCRIPTION' extIssueData.json)" "Description:" ""
-
+           bash writeOnComment.sh "$(jq -r '.ORGANIZATION' issueData.json)" "Organization:" ""
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
