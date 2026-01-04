@@ -40,11 +40,13 @@ issueBody=$(curl -s "https://$HOST/api/v1/repos/$REPO/issues/$ID" | jq -r '
   ')
 echo $issueBody
 communityName=$(echo $issueBody | jq '."Community name"')
+icon=$(echo $issueBody | jq '."Icon URL"')
 cat << EOF
 {
   "NAME": "$communityName",
   "AREA_TYPE": "Community",
-  "CONTINENT": ""
+  "CONTINENT": "",
+  "ICON":"$icon"
 }
 EOF
 
