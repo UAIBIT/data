@@ -48,7 +48,7 @@ cat << EOF
 {
   "OSM_ID":"",
   "NAME": "$communityName",
-  "AREA_TYPE": "Community",
+  "AREA_TYPE": "",
   "CONTINENT": "",
   "ICON":"$icon",
   "LIGHTNING_TIPS":"$lightningTips",
