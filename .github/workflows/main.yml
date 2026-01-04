@@ -63,9 +63,11 @@ jobs:
         run: |
            OSM_ID=$(jq '.OSM_ID' issueData.json)
            GEO_JSON=$(curl "https://polygons.openstreetmap.fr/get_geojson.py?id=$OSM_ID&params=0.001-0.005-0.005")
+           ISSUE_ID=$(jq -r '.ISSUE_ID' issueData.json)
            npm install -g mapshaper && curl "https://nominatim.openstreetmap.org/lookup?osm_ids=R$OSM_ID&format=json&polygon_geojson=" | jq '.[0].geojson' > input.json
+           bash getIssueData.sh ${{ vars.GIT_URL }} ${{ vars.REPO_OWNER }}/${{ vars.REPO_NAME }} $ISSUE_ID > extIssueData.json  
            GEO_JSON2=$(mapshaper input.json -simplify 3% -o output.json && cat output.json | jq '.geometries[0]' -c)
-           URL_ALIAS=$(jq -r '.NAME' issueData.json | iconv -f UTF-8 -t ASCII//TRANSLIT | tr -dc '[:alnum:][:space:]' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
+           URL_ALIAS=$(jq -r '.NAME' extIssueData.json | iconv -f UTF-8 -t ASCII//TRANSLIT | tr -dc '[:alnum:][:space:]' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
            
            bash writeOnComment.sh $(echo $GEO_JSON |  jq '.coordinates[0][0] | length') "OSM fr polygons:" ""
            bash writeOnComment.sh "$GEO_JSON" "" "geojson"
@@ -73,8 +75,8 @@ jobs:
            bash writeOnComment.sh "$GEO_JSON2" "" "geojson"
            bash writeOnComment.sh "$(jq -r '.AREA_TYPE' issueData.json)" "Area type:" ""
            bash writeOnComment.sh "$(jq -r '.CONTINENT' issueData.json)" "Continent:" ""
-           bash writeOnComment.sh "$(jq -r '.ICON' issueData.json)" "Icon:" ""
-           bash writeOnComment.sh "$(jq -r '.NAME' issueData.json)" "Name:" ""
+           bash writeOnComment.sh "$(jq -r '.ICON' extIssueData.json)" "Icon:" ""
+           bash writeOnComment.sh "$(jq -r '.NAME' extIssueData.json)" "Name:" ""
 
       - name: Read file contents
         id: read_file
