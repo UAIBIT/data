@@ -56,6 +56,12 @@ jobs:
              bash writeOnComment.sh "$(jq -r '.ORGANIZATION' issueData.json)" "Organization:" ""
              bash writeOnComment.sh "https://btcmap.org/community/$URL_ALIAS" "Community link:" ""
              bash writeOnComment.sh "[Community](https://btcmap.org/community/$URL_ALIAS)" "Community link md:" ""
+      - name: Set dynamic variable V2
+        run: echo -e "${{ github.event.issue.body }}" | awk '/NOTREMOVETHISPLEASEV2/{flag=1; next} flag' > issueData.json && DATA_SIZE=$(wc -c < issueData.json) && echo "DATA_SIZE=$DATA_SIZE" >> $GITHUB_ENV
+      - name: mount data V2
+        if: ${{ env.DATA_SIZE > 0 }}
+        run: |
+          echo "OK"
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
