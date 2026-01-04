@@ -1,0 +1,15 @@
+{ "Community name": "North Jersey Bitcoin", "Location": "Paramus, Bergen County, New Jersey, United States", "Associated areas": "United States of America (us)", "GeoJSON": "https://geojson.codingarena.top/?search=Paramus%2C%20Bergen%20County%2C%20New%20Jersey%2C%20United%20States", "Icon URL": "", "Lightning": "", "Social links": [ "https://njbitcoin.xyz/", "https://chat.whatsapp.com/CiKfISQqage3PJ8zqGys5z" ], "Community leader contact": "northjerseybitcoin@pm.me", "Notes": "Community and meetup in northern New Jersey! ", "Created at": "2025-12-31T21:51:27.248Z" }
+{
+  "OSM_ID":"",
+  "NAME": "North Jersey Bitcoin",
+  "AREA_TYPE": "",
+  "CONTINENT": "",
+  "ICON":"",
+  "LIGHTNING_TIPS":"",
+  "CONTACT":[
+  "https://njbitcoin.xyz/",
+  "https://chat.whatsapp.com/CiKfISQqage3PJ8zqGys5z"
+],
+  "DESCRIPTION":"Community and meetup in northern New Jersey! ",
+  "ORGANIZATION":""
+}

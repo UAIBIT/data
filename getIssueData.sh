@@ -38,7 +38,6 @@ issueBody=$(curl -s "https://$HOST/api/v1/repos/$REPO/issues/$ID" | jq -r '
     )
   | del(.current_key)
   ')
-echo $issueBody
 communityName=$(echo $issueBody | jq -r '."Community name"')
 icon=$(echo $issueBody | jq  -r '."Icon URL"')
 lightningTips=$(echo $issueBody | jq -r '.Lightning')
