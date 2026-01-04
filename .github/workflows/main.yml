@@ -86,6 +86,7 @@ jobs:
            done
            bash writeOnComment.sh "$(jq -r '.DESCRIPTION' extIssueData.json)" "Description:" ""
            bash writeOnComment.sh "$(jq -r '.ORGANIZATION' issueData.json)" "Organization:" ""
+           bash writeOnComment.sh "https://btcmap.org/community/$URL_ALIAS" "Community link:" ""
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
