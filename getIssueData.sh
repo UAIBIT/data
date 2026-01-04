@@ -43,6 +43,7 @@ communityName=$(echo $issueBody | jq -r '."Community name"')
 icon=$(echo $issueBody | jq  -r '."Icon URL"')
 lightningTips=$(echo $issueBody | jq -r '.Lightning')
 contact=$(echo $issueBody | jq -r '."Social links"')
+description=$(echo $issueBody | jq -r '.Notes')
 cat << EOF
 {
   "NAME": "$communityName",
@@ -50,7 +51,8 @@ cat << EOF
   "CONTINENT": "",
   "ICON":"$icon",
   "LIGHTNING_TIPS":"$lightningTips",
-  "CONTACT":$contact
+  "CONTACT":$contact,
+  "DESCRIPTION":"$description"
 }
 EOF
 
