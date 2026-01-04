@@ -6,7 +6,7 @@ REPO=$2
 ID=$3
 
 # Fetch and process
-curl -s "https://$HOST/api/v1/repos/$REPO/issues/$ID" | jq -r '
+issueBody=$(curl -s "https://$HOST/api/v1/repos/$REPO/issues/$ID" | jq -r '
   .body 
   | split("\r\n") | map(split("\n")) | flatten  # Handle mixed Windows/Linux newlines
   | map(select(length > 0))                     # Remove empty lines
@@ -37,4 +37,12 @@ curl -s "https://$HOST/api/v1/repos/$REPO/issues/$ID" | jq -r '
       end
     )
   | del(.current_key)
-'
+  ')
+echo $issueBody
+communityName=$(echo $issueBody | jq '."Community name"')
+cat << EOF
+{
+  "name": "$communityName"
+}
+EOF
+
